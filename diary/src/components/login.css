@@ -1,0 +1,20 @@
+.halfscreen{
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: auto;
+    background-color: rgb(103, 157, 228);
+    box-shadow: 5px 5px gray;
+    border-radius: 10px;
+}
+.text-light{
+    color: cornsilk;
+}
+.form-head{
+    color: cornsilk;
+}
+.signIN{
+    margin-bottom: 12px;
+    margin-top: 5px;
+}
