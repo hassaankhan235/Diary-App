@@ -1,26 +1,29 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit'
 import axios from 'axios'
 
-export const authenticate = createAsyncThunk(
+export const registerUser = createAsyncThunk(
     'user/authenticate',
     async(data, thunkAPI)=> {
-        axios.post('http://localhost:3001/register', {
-            name: data.name,
+        const resp = axios.post('http://localhost:3001/register', {
+            username: data.username,
             email: data.email,
-            password: data.pwd
+            password: data.password
         })
-        .then((respose) => {
-            console.log("RESPONSE RECIEVED",respose.data, data)
+        .then((response) => {
+          console.log("REG RES",response.data,response.statusText)
+            return response
         })
+        return resp
     }
 )
 
 export const login = createAsyncThunk(
     'user/login',
     async(data, thunkAPI)=> {
-        const resp = axios.post('http://localhost:3001/login',{password:data.password})
+        const resp = axios.post('http://localhost:3001/login',{
+        email:data.email,  
+        password:data.password})
         .then((respose) => {
-            console.log('RESPONSE',respose.data)
             return respose.data
         })
         return resp
@@ -28,31 +31,65 @@ export const login = createAsyncThunk(
 )
 
 export const user = createSlice({
-  name: "users",
+  name: 'users',
   initialState: {
-    user: {}
+    user: {},
+    registered: false, 
+    error: false,
+    logIn: false
   },
   reducers: {
-    registerUser: (state, action) => {
-      state.push({
-        id: action.payload.id,
-        name: action.payload.name,
-        email: action.payload.email,
-        password: action.payload.password,
-        diaryIds: action.payload.diaryid,
-      });
+    registerStateChange: (state,action) => {
+      // Redux Toolkit allows us to write "mutating" logic in reducers. It
+      // doesn't actually mutate the state because it uses the Immer library,
+      // which detects changes to a "draft state" and produces a brand new
+      // immutable state based off those changes
+      state.registered = false
+      state.error = false
+    },
+    logOut: state => {
+      return {...state,
+        user: {},
+        registered: false, 
+        error: false,
+        logIn: false
+      }
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload;
     },
   },
+
+
   extraReducers: {
-    [authenticate.fulfilled]: (state, action) => {
-      console.log("chek", state, action);
+    [registerUser.fulfilled]: (state, action) => {
+      console.log("Action",action)
+      return {...state, 
+        user: action.payload.data, 
+        registered: true,
+        logIn: true}
+    },
+    [registerUser.rejected]: (state, action) => {
+      console.log('RJEC', action, action.error.statusText)
+      return {...state, 
+              registered: false ,
+              error: true, 
+              logIn: false }
     },
     [login.fulfilled]: (state, action) => {
-      console.log('done', action, state)
-      return {...state, user: action.payload}
+      console.log('Login', action)
+      return {...state, 
+        user: action.payload, 
+        logIn: true}
+    },
+    [login.rejected]: (state) => {
+      return { ...state,
+        error: true,
+        logIn: false
+      }
     },
   },
 });
 
-export const {setUser} = user.actions;
+export const {registerStateChange, logOut} = user.actions;
 export default user.reducer

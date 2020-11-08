@@ -16,7 +16,7 @@ const bodyParserJson = bodyParser.json()
 const user = [
   {
     name: "khan",
-    id: 0,
+    id: 20,
     email: "hassaankhan@hotmail.com",
     password: "bagla",
   },
@@ -45,21 +45,59 @@ app.get('/',(req, res) => {
 })
 
 app.post('/login',(req, res) => {
-    const user = users.find(user => {
-        console.log(req.body)
-        return user.password === req.body.password
-    })
-    res.send(user)
+  console.log(req,req.body)
+        knex.select('*').from('users')
+        .where('password', '=', req.body.password)
+        .returning('*')
+        .then(user => {
+          if(user.length){
+            res.json(user[0])
+          } else {
+            res.status(400).json('User Not found')
+          }
+          
+        })
+        .catch(err =>  res.status(400).json('Unable to get user'))
+})
+
+app.get('/profile/:id',(req, res) => {
+  const{id} = req.params
+    knex('*').from('users').where({id:id})
+    .then(user => {
+      if (user.length) {
+        res.json(user)
+      }
+      else {
+        res.status(400).json('not found')
+      }
+    }).catch(err => res.this.status(400).json('error getting users'))
 })
 
 app.post('/register',(req, res) => {
-    const {name, age} = req.body
+    const {username, email, password} = req.body
     console.log('REQUEST', req.body)
-    knex('users').insert({
-      name: name,
-      age: age
-    }).then(console.log)
-    res.send("Success")
+    knex.transaction(trx => {
+      trx.insert({
+        email: email
+      })
+      .into('posts')
+      .returning('email')
+      .then(loginEmail => {
+          return trx('users')
+           .returning('*')
+           .insert({
+              username: username,
+              email: loginEmail[0],
+              password: password
+    })
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(400).json('Unable to Register'))
 })
+       .then(trx.commit)
+       .catch(trx.rollback)
+      })
+    .catch(err => res.status(400).json('Unable to register'))
+    })
+ 
 
 app.listen('3001')
