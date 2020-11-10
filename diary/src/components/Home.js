@@ -1,9 +1,7 @@
 import React from 'react'
 import Guest from './guest'
 import { useSelector} from 'react-redux'
-import './home.css'
-import RegisteredUser from './RegisteredUser'
-import { registerUser } from '../store/features/userSlice'
+import RegisteredUser from './Registered User/RegisteredUser'
 
 
 function Home() {

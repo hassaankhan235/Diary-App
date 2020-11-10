@@ -44,6 +44,43 @@ app.get('/',(req, res) => {
     res.send({id:1,name: "Has khan"})
 })
 
+app.post('/', (req, res) => {
+  console.log("POSTS",req.body)
+  if (req.body.getpost) {
+     knex.select('*').from('posts')
+  .where('email','=', req.body.email)
+  .returning('*')
+  .then(posts => {
+    res.status(200).json(posts)
+  })
+  .catch(err =>  res.status(400).json('Unable to get posts'))
+  }
+  else {
+      const {email, date, post, topic} = req.body
+  knex('posts').insert({
+    email: email,
+    date: date,
+    post: post,
+    topic: topic,
+  })
+  .returning('*')
+  .then(post => res.status(200).json('Success'))
+  }
+})
+
+app.post('/',(req, res) => {
+  console.log('req',req.body)
+  const {email, date, post, topic} = req.body
+  knex('posts').insert({
+    email: email,
+    date: date,
+    post: post,
+    topic: topic,
+  })
+  .returning('*')
+  .then(post => res.status(200).json('Success'))
+})
+
 app.post('/login',(req, res) => {
   console.log(req,req.body)
         knex.select('*').from('users')

@@ -18,6 +18,12 @@ function App() {
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <span className="navbar-brand" >Diary</span>
       <ul className="navbar-nav ml-auto">
+
+      <li className="nav-item "> 
+      <Link to='/' className='nav-link'>Home
+      </Link>
+      </li>
+      
       {
         useSelector((state) => {
           return state.myReducer.logIn ? 
@@ -31,11 +37,13 @@ function App() {
           </li>
         })
       }
+      
       <li className="nav-item " 
       onClick={() => dispatch(registerStateChange(false))} > 
       <Link to='/register' className='nav-link'>Register
       </Link>
       </li>
+
       </ul>
       </nav>
       </header>

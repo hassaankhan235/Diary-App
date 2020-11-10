@@ -18,10 +18,12 @@ function Register() {
         }
         else if(state.myReducer.logIn){
           return (
+            <div className='background'>
             <div className = 'container alert alert-success mt-5'>
             <h4 class="alert-heading"> Already Registered !</h4>
             You are Alreasy Registered. Please log out 
             to register with another ID
+            </div>
             </div>)
         }
         else if(state.myReducer.error) {

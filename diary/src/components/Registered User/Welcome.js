@@ -3,16 +3,14 @@ import {useSelector} from 'react-redux'
 
 function Welcome() {
   return (
-    <div className='jumbotron'>
-    <h1 className="display-4 text-dark">
+    <h3 className="text-light mt-0 bg-primary container-fluid text-center welcome">
     Welcome Home
       {
           useSelector((state) => {
               return ` ` + state.myReducer.user.username
           })
       }
-      </h1>
-    </div>
+      </h3>
   )
 }
 

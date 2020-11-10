@@ -6,7 +6,8 @@ import { registerStateChange } from '../store/features/userSlice'
 const LoggedIn = ({match, history}) => {
   const dispatch = useDispatch()
     return(
-        <div className='container'>
+        <div className='background'>
+        <div className='container-fluid'>
         <div className='alert alert-success mt-5'>
         <h4 className='alert-heading'> STATUS </h4>
         {useSelector((state) => {
@@ -21,13 +22,14 @@ const LoggedIn = ({match, history}) => {
         })}
         </div>
 
-        <button onClick={() => {
+        <button className='btn btn-outline-info' onClick={() => {
           dispatch(registerStateChange())
           history.push('/')
         }}>
         Go to Home Screen
         </button>
           {console.log('HISTORY', history)}
+        </div>
         </div>
     )
   }

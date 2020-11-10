@@ -1,4 +1,5 @@
 .background{
+    position: relative;
     background-color: blueviolet;
     height: 100vh;
     overflow: hidden;

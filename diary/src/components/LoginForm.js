@@ -15,7 +15,7 @@ const {register, handleSubmit} = useForm({mode:'onBlur'})
   }
 
   return (
-    <div>
+    <div className='background'>
     <div className="container-fluid halfscreen">
     <form onSubmit={handleSubmit(onSubmit)}>
     <div className='mt-2 form-head'>

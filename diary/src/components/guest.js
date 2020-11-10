@@ -1,5 +1,6 @@
 import React from 'react'
 import Diary from '../diary'
+import './home.css'
 
 function Guest() {
     return (

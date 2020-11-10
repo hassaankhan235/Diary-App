@@ -63,21 +63,18 @@ export const user = createSlice({
 
   extraReducers: {
     [registerUser.fulfilled]: (state, action) => {
-      console.log("Action",action)
       return {...state, 
         user: action.payload.data, 
         registered: true,
         logIn: true}
     },
     [registerUser.rejected]: (state, action) => {
-      console.log('RJEC', action, action.error.statusText)
       return {...state, 
               registered: false ,
               error: true, 
               logIn: false }
     },
     [login.fulfilled]: (state, action) => {
-      console.log('Login', action)
       return {...state, 
         user: action.payload, 
         logIn: true}
