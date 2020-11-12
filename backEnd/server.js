@@ -5,12 +5,12 @@ var knex = require('knex')({
   connection: {
     host : '127.0.0.1',
     user : 'postgres',
-    password : 'postgres',
-    database : 'test'
+    password : 'Ghubbara@98',
+    database : 'postgres'
   }
 });
 
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const bodyParserJson = bodyParser.json()
 
 const user = [
@@ -40,12 +40,11 @@ knex.select('*').from('users').then(data => {
   console.log('DATA',data)
 })
 
-app.get('/',(req, res) => {
-    res.send({id:1,name: "Has khan"})
-})
 
+//  To GET & POST USER DIARY POSTS
 app.post('/', (req, res) => {
-  console.log("POSTS",req.body)
+  console.log("REQUEST", req.body)
+  // To Get the user diary posts
   if (req.body.getpost) {
      knex.select('*').from('posts')
   .where('email','=', req.body.email)
@@ -55,6 +54,16 @@ app.post('/', (req, res) => {
   })
   .catch(err =>  res.status(400).json('Unable to get posts'))
   }
+
+  // To get the Count of User Posts 
+  else if(req.body.getPostCount) {
+    console.log('POSTCOUNTEMAIL', req.body.email)
+    knex('posts').count('*').where('email', '=', req.body.email )
+    .returning('*')
+    .then(count => res.status(200).json(count)) 
+  }
+
+  // To Post user Diary posts
   else {
       const {email, date, post, topic} = req.body
   knex('posts').insert({
@@ -68,8 +77,8 @@ app.post('/', (req, res) => {
   }
 })
 
+// To Post user Diary posts
 app.post('/',(req, res) => {
-  console.log('req',req.body)
   const {email, date, post, topic} = req.body
   knex('posts').insert({
     email: email,
@@ -81,8 +90,8 @@ app.post('/',(req, res) => {
   .then(post => res.status(200).json('Success'))
 })
 
+// TO login in to the App
 app.post('/login',(req, res) => {
-  console.log(req,req.body)
         knex.select('*').from('users')
         .where('password', '=', req.body.password)
         .returning('*')
@@ -97,6 +106,7 @@ app.post('/login',(req, res) => {
         .catch(err =>  res.status(400).json('Unable to get user'))
 })
 
+// For Dynamic web addresses generated during the software operation
 app.get('/profile/:id',(req, res) => {
   const{id} = req.params
     knex('*').from('users').where({id:id})
@@ -110,31 +120,16 @@ app.get('/profile/:id',(req, res) => {
     }).catch(err => res.this.status(400).json('error getting users'))
 })
 
+
+// TO register a new user
 app.post('/register',(req, res) => {
     const {username, email, password} = req.body
-    console.log('REQUEST', req.body)
-    knex.transaction(trx => {
-      trx.insert({
-        email: email
-      })
-      .into('posts')
-      .returning('email')
-      .then(loginEmail => {
-          return trx('users')
-           .returning('*')
-           .insert({
-              username: username,
-              email: loginEmail[0],
-              password: password
-    })
-    .then(user => res.status(200).json(user))
-    .catch(err => res.status(400).json('Unable to Register'))
+    knex('users').insert({
+        username: username,
+        email: email,
+        password: password
+}).returning('*')
+.then(user => res.status(200).json(user))
 })
-       .then(trx.commit)
-       .catch(trx.rollback)
-      })
-    .catch(err => res.status(400).json('Unable to register'))
-    })
- 
 
 app.listen('3001')
