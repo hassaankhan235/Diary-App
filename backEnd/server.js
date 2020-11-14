@@ -5,8 +5,8 @@ var knex = require('knex')({
   connection: {
     host : '127.0.0.1',
     user : 'postgres',
-    password : 'Ghubbara@98',
-    database : 'postgres'
+    password : 'postgres',
+    database : 'test'
   }
 });
 
@@ -47,6 +47,7 @@ app.post('/', (req, res) => {
   // To Get the user diary posts
   if (req.body.getpost) {
      knex.select('*').from('posts')
+     .orderBy('postid')
   .where('email','=', req.body.email)
   .returning('*')
   .then(posts => {
@@ -60,7 +61,27 @@ app.post('/', (req, res) => {
     console.log('POSTCOUNTEMAIL', req.body.email)
     knex('posts').count('*').where('email', '=', req.body.email )
     .returning('*')
-    .then(count => res.status(200).json(count)) 
+    .then(count => res.status(200).json(count[0])) 
+  }
+
+  // To Delete posts
+  else if (req.body.delete) {
+    knex('posts').where('postid',req.body.postid)
+    .del()
+    .returning('*')
+    .then(deleted => res.status(200).json('Deleted'))
+  }
+
+  // To update post 
+  else if (req.body.update) {
+    const{post} = req.body
+    knex('posts')
+    .where('postid','=',req.body.postid)
+    .update({
+      post: post
+    })
+    .returning('*')
+    .then(() => res.status(200).json('Updated'))
   }
 
   // To Post user Diary posts

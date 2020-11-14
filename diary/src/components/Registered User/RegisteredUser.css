@@ -1,6 +1,18 @@
 .diary-background{
     background-color: blueviolet;
+    height: 100vh;
 }
 .containerpost{
     padding-left: 10%;
+}
+.full-height-bg{
+    background-color: blueviolet;
+    height: auto;
+}
+
+@media (min-width:960px) {
+    .diary-background{
+        background-color: blueviolet;
+        height: auto;
+    }
 }
