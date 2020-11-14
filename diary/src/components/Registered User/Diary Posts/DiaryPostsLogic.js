@@ -1,16 +1,17 @@
 import React , { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getPosts, getPostCount, post } from '../../../store/features/postSlice'
+import { getPosts } from '../../../store/features/postSlice'
 import DiaryPost from './DiaryPost'
  
-function DiaryPostsLogic() {
-    const dispatch = useDispatch()
-    const email = useSelector((state) => state.myReducer.user.email);
-    const posts = useSelector((state) => state.postReducer.postCount )
-    
+function DiaryPostsLogic() {    
+
+  const dispatch = useDispatch()  
+  const email = useSelector((state) => state.myReducer.user.email);
+
     useEffect(() => {
         dispatch(getPosts(email))
-      },[])
+      },[dispatch, email])
+    
 
 
   
@@ -24,7 +25,7 @@ function DiaryPostsLogic() {
               
               return (
 
-                <DiaryPost key={post.postid} props = {post} email = {email}/> 
+                <DiaryPost props = {post} email = {email} key= {`${post.postid}`} /> 
          
                 )
           })

@@ -29,7 +29,7 @@ function Post() {
       <div className="d-flex">
         <div className="flex-column">
           <div className="text-light font-weight-bold">
-          <i class="fa fa-book mr-1"></i>TOPIC </div>
+          <i className="fa fa-book mr-1"></i>TOPIC </div>
           <input
             type="text"
             className="bg-warning text-uppercase"
@@ -40,7 +40,7 @@ function Post() {
 
         <div className="flex-column ml-auto">
           <div className="text-light font-weight-bold ">
-          <i class="far fa-calendar mr-1"></i>PICK A DATE </div>
+          <i className="far fa-calendar mr-1"></i>PICK A DATE </div>
           <input
             type="date"
             className="mb-2 bg-warning text-uppercase"
@@ -81,7 +81,7 @@ function Post() {
         }}
         className="btn btn-outline-primary btn-lg btn-block mg-3"
       >
-      <i class="fa fa-save mr-1" style={{color:'white'}}></i> SAVE
+      <i className="fa fa-save mr-1" style={{color:'white'}}></i> SAVE
       </button>
     </div>
   );

@@ -23,13 +23,13 @@ function DiaryPost(props) {
       <div className="d-flex">
         <div>
           <div className="text-light"> 
-          <i class="fa fa-book mr-1"></i>TOPIC </div>
+          <i className="fa fa-book mr-1"></i>TOPIC </div>
           <div className="bg-warning text-uppercase pl-2 pr-2"> {topic} </div>
         </div>
 
         <div className="ml-auto text-light">
           <div> 
-          <i class="far fa-calendar"></i> DATE </div>
+          <i className="far fa-calendar"></i> DATE </div>
           <div className="bg-info text-uppercase"> {date} </div>
         </div>
       </div>
@@ -52,7 +52,7 @@ function DiaryPost(props) {
         }}
         disabled = {editing}
       >
-      <i class="fa fa-edit mr-1" style={{color:'white'}}></i> 
+      <i className="fa fa-edit mr-1" style={{color:'white'}}></i> 
       Edit
       </button>
 
@@ -67,7 +67,7 @@ function DiaryPost(props) {
         },1200)
       }}
       disabled = {!editing} > 
-      <i class="fa fa-save mr-1" style={{color:'white'}}></i>
+      <i className="fa fa-save mr-1" style={{color:'white'}}></i>
       Save </button>
 
       <button
@@ -80,7 +80,7 @@ function DiaryPost(props) {
           } , 1200)
         } }
       >
-      <i class="fa fa-trash mr-1" style={{color:'white'}}></i>
+      <i className="fa fa-trash mr-1" style={{color:'white'}}></i>
         Delete
       </button>
       </div>
