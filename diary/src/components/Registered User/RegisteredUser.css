@@ -10,7 +10,7 @@
     height: auto;
 }
 
-@media (min-width:960px) {
+@media (max-width:960px) {
     .diary-background{
         background-color: blueviolet;
         height: auto;

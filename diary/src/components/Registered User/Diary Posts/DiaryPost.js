@@ -64,7 +64,7 @@ function DiaryPost(props) {
         setTimeout(() => {
           dispatch(getPostCount(email))
           dispatch(getPosts(email))
-        },1200)
+        },900)
       }}
       disabled = {!editing} > 
       <i className="fa fa-save mr-1" style={{color:'white'}}></i>
@@ -77,7 +77,7 @@ function DiaryPost(props) {
           setTimeout(() => {
             dispatch(getPostCount(email))
             dispatch(getPosts(email))
-          } , 1200)
+          } , 900)
         } }
       >
       <i className="fa fa-trash mr-1" style={{color:'white'}}></i>

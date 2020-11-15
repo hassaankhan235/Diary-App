@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { post } from "../../store/features/postSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../../store/features/postSlice";
+import { getPosts, getPostCount } from "../../store/features/postSlice";
 import "./post.css";
 
 function Post() {
@@ -74,7 +74,10 @@ function Post() {
               email: email,
             })
           );
-          setTimeout(() => dispatch(getPosts(email)), 1000);
+          setTimeout(() => {
+            dispatch(getPosts(email))
+            dispatch(getPostCount(email))
+          }, 800);
           setTopic("");
           setPost("");
           setDate();
